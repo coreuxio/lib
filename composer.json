@@ -1,0 +1,30 @@
+{
+  "name": "coreuxio/lib",
+  "homepage": "https://github.com/coreuxio/lib",
+  "description": "A small set of tools to speed up Laravel API development",
+  "keywords": [
+    "common",
+    "tools",
+    "services"
+  ],
+  "type": "library",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Core UX",
+      "homepage": "http://coreux.io"
+    }
+  ],
+  "require": {
+    "php": "^7.4",
+    "nesbot/carbon": "^2.66",
+    "illuminate/pagination": "^8.83",
+    "illuminate/http": "^8.83"
+  },
+  "scripts": {},
+  "autoload": {
+    "psr-4": {
+      "Coreux\\lib\\": "src/"
+    }
+  }
+}
