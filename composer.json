@@ -12,7 +12,7 @@
   "authors": [
     {
       "name": "Luis Angel Perez Pamplona",
-      "homepage": "http://coreux.io",
+      "homepage": "https://coreux.io",
       "email": "luis@coreux.io"
     }
   ],
@@ -27,8 +27,5 @@
     "psr-4": {
       "Coreux\\lib\\": "src/"
     }
-  },
-  "extra": {
-    "version": "1.0.0"
   }
 }
