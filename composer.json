@@ -11,8 +11,9 @@
   "license": "proprietary",
   "authors": [
     {
-      "name": "Core UX",
-      "homepage": "http://coreux.io"
+      "name": "Luis Angel Perez Pamplona",
+      "homepage": "http://coreux.io",
+      "email": "luis@coreux.io"
     }
   ],
   "require": {
@@ -26,5 +27,8 @@
     "psr-4": {
       "Coreux\\lib\\": "src/"
     }
+  },
+  "extra": {
+    "version": "1.0.0"
   }
 }
