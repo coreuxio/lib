@@ -1,9 +1,12 @@
 <?php
 
-namespace Coreux\Lib\API\Traits;
+namespace Coreux\lib\API\Traits;
 
-use Coreux\Lib\API\Contracts\PaginationTransformer;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Coreux\Lib\API\Contracts\PaginationTransformer;
+use Coreux\lib\API\Exceptions\APIValidationException;
 
 trait ApiResponse
 {
@@ -76,5 +79,40 @@ trait ApiResponse
         }
         $this->response['meta']['timestamp']=Carbon::now()->toDateTimeString();
         return $this;
+    }
+
+    /**
+     * @throws APIvalidationException
+     */
+    public function apiValidation(array $items , array $validationRules, array $validationMessages = null): array
+    {
+        $validator = Validator::make($items,$validationRules);
+        if ($validator->fails()) {
+            $errors = $validator->errors()->toArray();
+            throw new APIvalidationException("Validation Error",400,null,$errors);
+        }
+        return $validator->getData();
+    }
+
+    public function getSimplePaginationParams(Request $request): array
+    {
+        $params = $this->apiValidation($request->all(),[
+            "perPage"=>"nullable|integer|max:50",
+            "page"=>"nullable|integer"
+        ]);
+        $page = $params['page'] ?? 1;
+        $perPage = $params['perPage'] ?? 10;
+        return ["page"=>$page,"perPage"=>$perPage];
+    }
+
+   public function getCursorPaginationParams(Request $request): array
+    {
+        $params = $this->apiValidation($request->all(),[
+            "perPage"=>"nullable|integer|max:50",
+            "cursor"=>"nullable|string"
+        ]);
+        $cursor = $params['cursor'] ?? null;
+        $perPage = $params['perPage'] ?? 10;
+        return ["cursor"=>$cursor,"perPage"=>$perPage];
     }
 }
