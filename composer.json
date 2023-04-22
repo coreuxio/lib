@@ -19,7 +19,7 @@
   "require": {
     "php": "^7.4||^8.0",
     "nesbot/carbon": "^2.66",
-    "laravel/framework": "^8.0"
+    "laravel/framework": "^10.0"
   },
   "scripts": {},
   "autoload": {
