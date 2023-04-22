@@ -63,7 +63,8 @@ trait ApiResponse
         if(!$this->response['meta']) $this->response['meta'] = [];
         if(!isset($this->response['meta']['milliseconds']))
         {
-            $this->response['meta'] = array_merge(['milliseconds'=> floor((microtime(true)-LARAVEL_START)*1000)],$this->response['meta']);
+            $start = defined("LARAVEL_START") ? APP_START : microtime(true);
+            $this->response['meta'] = array_merge(['milliseconds'=> floor((microtime(true)-$start)*1000)],$this->response['meta']);
         }
         if(!isset($this->response['meta']['httpCode']))
         {
