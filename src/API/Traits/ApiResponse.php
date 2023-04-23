@@ -66,8 +66,9 @@ trait ApiResponse
         if(!$this->response['meta']) $this->response['meta'] = [];
         if(!isset($this->response['meta']['milliseconds']))
         {
-            $start = defined("LARAVEL_START") ? APP_START : microtime(true);
-            $this->response['meta'] = array_merge(['milliseconds'=> floor((microtime(true)-$start)*1000)],$this->response['meta']);
+            $start = defined("APP_START") ? APP_START : false;
+            $time  = $start===false?0: floor((microtime(true)-$start)*1000);
+            $this->response['meta'] = array_merge(['milliseconds'=>$time ],$this->response['meta']);
         }
         if(!isset($this->response['meta']['httpCode']))
         {
@@ -94,6 +95,9 @@ trait ApiResponse
         return $validator->getData();
     }
 
+    /**
+     * @throws APIValidationException
+     */
     public function getSimplePaginationParams(Request $request): array
     {
         $params = $this->apiValidation($request->all(),[
@@ -105,7 +109,10 @@ trait ApiResponse
         return ["page"=>$page,"perPage"=>$perPage];
     }
 
-   public function getCursorPaginationParams(Request $request): array
+    /**
+     * @throws APIValidationException
+     */
+    public function getCursorPaginationParams(Request $request): array
     {
         $params = $this->apiValidation($request->all(),[
             "perPage"=>"nullable|integer|max:50",
